@@ -1,15 +1,15 @@
 {
-    "name": "nos/jsonapiclient",
-    "description": ":package_description",
+    "name": "imjonos/laravel-json-api-client",
+    "description": "version 0.1a",
     "license": "license",
     "authors": [
         {
-            "name": "author name",
-            "email": "author email",
-            "homepage": "author homepage"
+            "name": "Eugeny Nosenko",
+            "email": "info@toprogram.ru",
+            "homepage": "toprogram.ru"
         }
     ],
-    "homepage": "https://github.com/imjonos/jsonapiclient",
+    "homepage": "https://github.com/laravel-json-api-client",
     "keywords": ["Laravel", "JsonApiClient"],
     "require": {
         "illuminate/support": "~5|~6|~7|~8"
