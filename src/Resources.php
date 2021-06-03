@@ -1,11 +1,11 @@
 <?php
-
-
 namespace Nos\JsonApiClient;
 use GuzzleHttp\Exception\GuzzleException;
 use Nos\JsonApiClient\Interfaces\Resources as ResourcesInterface;
+use IteratorAggregate;
+use ArrayIterator;
 
-class Resources implements ResourcesInterface
+class Resources implements ResourcesInterface, IteratorAggregate
 {
     /**
      * @var Client
@@ -67,9 +67,10 @@ class Resources implements ResourcesInterface
         }
         return $result;
     }
-    
+
     /**
      * Return array of resources
+     *
      * @return array
      */
     public function toArray():array
@@ -77,6 +78,15 @@ class Resources implements ResourcesInterface
         return $this->resources;
     }
 
+    /**
+     * Iterator
+     *
+     * @return ArrayIterator
+     */
+    public function getIterator():ArrayIterator
+    {
+        return new ArrayIterator($this->toArray());
+    }
 
     /**
      * Get client
