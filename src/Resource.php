@@ -66,8 +66,8 @@ class Resource implements ResourceInterface
     public function getRelationshipIds(string $type = ''): array
     {
         $ids = [];
-        if(isset($this->resource['relationships'])) {
-            foreach ($this->resource['relationships'][$type] as $value) {
+        if(isset($this->resource['relationships']) && isset($this->resource['relationships'][$type])) {
+            foreach ($this->resource['relationships'][$type]['data'] as $value) {
                 $ids[] = (int)$value['id'];
             }
         }
