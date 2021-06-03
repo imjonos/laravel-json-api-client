@@ -76,6 +76,7 @@ class Client implements ClientInterface
      * GET Resource
      *
      * @param string $uri
+     * @param array $query
      * @return array
      * @throws GuzzleException
      */
