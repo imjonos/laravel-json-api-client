@@ -89,7 +89,7 @@ class Resources implements ResourcesInterface, IteratorAggregate
                 $total = (int)$this->meta['total'];
             }
 
-            $callback($this->toArray(), $pageNumber, $total);
+            $callback($this->data, $pageNumber, $total);
 
             $pageNumber++;
         } while ($pageNumber < $lastPage);
@@ -132,6 +132,17 @@ class Resources implements ResourcesInterface, IteratorAggregate
     {
         return new ArrayIterator($this->toArray());
     }
+
+    /**
+     * Get Meta
+     *
+     * @return array
+     */
+    public function getMeta(): array
+    {
+        return $this->meta;
+    }
+
 
     /**
      * Get client
