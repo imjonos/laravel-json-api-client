@@ -32,6 +32,19 @@ class Resources implements ResourcesInterface, IteratorAggregate
         $this->resourceUrl = $resourceUrl;
         $this->client = $client;
     }
+    
+     /**
+     * Get resources property
+     *
+     * @param string $property
+     * @return mixed|null
+     */
+    public function __get(string $property)
+    {
+        return array_key_exists($property, $this->resources)
+            ? $this->resources[$property]
+            : null;
+    }
 
      /**
      * Get resources
