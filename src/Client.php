@@ -73,15 +73,15 @@ class Client implements ClientInterface
     }
 
     /**
-     * Get Resource
+     * GET Resource
      *
      * @param string $uri
      * @return array
      * @throws GuzzleException
      */
-    public function get(string $uri): array
+    public function get(string $uri, array $query = []): array
     {
-        $response = $this->sendApiRequest('GET', $this->apiUrl . $uri);
+        $response = $this->sendApiRequest('GET', $this->apiUrl . $uri, ['query' => $query]);
         return json_decode((string)$response->getBody(), true);
     }
 
