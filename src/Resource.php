@@ -63,7 +63,7 @@ class Resource implements ResourceInterface
      * @param string $type
      * @return array
      */
-    protected function getRelationshipIds(string $type = ''): array
+    public function getRelationshipIds(string $type = ''): array
     {
         $ids = [];
         if(isset($this->resource['relationships'])) {
