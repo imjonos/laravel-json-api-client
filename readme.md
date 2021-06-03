@@ -9,6 +9,20 @@ $ composer require imjonos/laravel-json-api-client
 ```
 
 ## Usage
+```
+$resources = JsonApiClient::resources('/api/v1/users');
+
+OR
+
+$client = new Client($apiUrl, $clientId, $clientSecret);
+$resources = new Resources($client, '/api/v1/users');
+
+$resources->chunk(100, function($resources, $pageNumber, $total){
+  foreach ($resources AS $resource){
+                ...
+  }
+});
+```
 
 ## Change log
 
