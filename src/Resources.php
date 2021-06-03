@@ -33,15 +33,16 @@ class Resources implements ResourcesInterface, IteratorAggregate
         $this->client = $client;
     }
 
-    /**
+     /**
      * Get resources
      *
+     * @param array $query
      * @return array
      * @throws GuzzleException
      */
-    public function get(): array
+    public function get(array $query = []): array
     {
-        $resources = $this->getClient()->get($this->getUrl());
+        $resources = $this->getClient()->get($this->getUrl(), $query);
         $this->resources = [];
 
         foreach ($resources AS $resource){
