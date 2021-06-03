@@ -67,6 +67,16 @@ class Resources implements ResourcesInterface
         }
         return $result;
     }
+    
+    /**
+     * Return array of resources
+     * @return array
+     */
+    public function toArray():array
+    {
+        return $this->resources;
+    }
+
 
     /**
      * Get client
