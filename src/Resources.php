@@ -1,4 +1,6 @@
 <?php
+
+
 namespace Nos\JsonApiClient;
 use GuzzleHttp\Exception\GuzzleException;
 use Nos\JsonApiClient\Interfaces\Resources as ResourcesInterface;
@@ -20,7 +22,18 @@ class Resources implements ResourcesInterface, IteratorAggregate
     /**
      * @var array
      */
-    protected array $resources = [];
+    protected array $data = [];
+
+    /**
+     * @var array
+     */
+    protected array $meta = [];
+
+    /**
+     * @var array
+     */
+    protected array $included = [];
+
 
     /**
      * Resources constructor.
@@ -32,21 +45,8 @@ class Resources implements ResourcesInterface, IteratorAggregate
         $this->resourceUrl = $resourceUrl;
         $this->client = $client;
     }
-    
-     /**
-     * Get resources property
-     *
-     * @param string $property
-     * @return mixed|null
-     */
-    public function __get(string $property)
-    {
-        return array_key_exists($property, $this->resources)
-            ? $this->resources[$property]
-            : null;
-    }
 
-     /**
+    /**
      * Get resources
      *
      * @param array $query
@@ -56,14 +56,15 @@ class Resources implements ResourcesInterface, IteratorAggregate
     public function get(array $query = []): array
     {
         $resources = $this->getClient()->get($this->getUrl(), $query);
-        $this->resources = [];
+        if(isset($resources['meta'])) $this->meta = $resources['meta'];
+        if(isset($resources['included'])) $this->included = $resources['included'];
 
-        foreach ($resources AS $resource){
-            $this->resources[] = new Resource($this->getClient(), $this->getUrl(), $resource);
+        foreach ($resources['data'] AS $resource){
+            $this->data[] = new Resource($this->getClient(), $this->getUrl(), $resource);
         }
-        return $this->resources;
+        return $this->data;
     }
-    
+
     /**
      * Chunking Results From Api
      *
@@ -76,7 +77,7 @@ class Resources implements ResourcesInterface, IteratorAggregate
         $lastPage = 1;
         $total = 0;
         do {
-            $resources = $this->get([
+            $this->get([
                 'page' => [
                     'size' => $size,
                     'number' => $pageNumber
@@ -84,11 +85,11 @@ class Resources implements ResourcesInterface, IteratorAggregate
             ]);
 
             if ($total === 0) {
-                $lastPage = (int)$resources->meta['last_page'];
-                $total = (int)$resources->meta['total'];
+                $lastPage = (int)$this->meta['last_page'];
+                $total = (int)$this->meta['total'];
             }
 
-            $callback($resources, $pageNumber, $total);
+            $callback($this->toArray(), $pageNumber, $total);
 
             $pageNumber++;
         } while ($pageNumber < $lastPage);
@@ -104,7 +105,7 @@ class Resources implements ResourcesInterface, IteratorAggregate
     public function getIncluded(string $type, array $ids = []): array
     {
         $result = [];
-        foreach ($this->resources['included'] as $include) {
+        foreach ($this->included as $include) {
             if (in_array((int)$include['id'], $ids) && $include['type'] === $type) {
                 $result[] = $include;
             }
@@ -119,7 +120,7 @@ class Resources implements ResourcesInterface, IteratorAggregate
      */
     public function toArray():array
     {
-        return $this->resources['data'];
+        return $this->data;
     }
 
     /**
