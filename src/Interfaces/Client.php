@@ -10,14 +10,14 @@ Interface Client
      */
     public function getToken(): ?array;
 
-
     /**
      * Get Resource
      *
      * @param string $uri
+     * @param array $query
      * @return array
      */
-    public function get(string $uri):array;
+    public function get(string $uri, array $query = []):array;
 
     /**
      * PATCH Resource
