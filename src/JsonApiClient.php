@@ -8,13 +8,12 @@ class JsonApiClient
 {
     /**
      * @param string $url
-     * @return array
+     * @return Resources
      * @throws \GuzzleHttp\Exception\GuzzleException
      */
-    public function resources(string $url = ''):array
+    public function resources(string $url = ''):Resources
     {
-        $resources = new Resources(App::make(Client::class), $url);
-        return $resources->get();
+        return new Resources(App::make(Client::class), $url);
     }
 
     /**
