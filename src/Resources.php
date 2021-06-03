@@ -76,7 +76,7 @@ class Resources implements ResourcesInterface, IteratorAggregate
      */
     public function toArray():array
     {
-        return $this->resources;
+        return $this->resources['data'];
     }
 
     /**
