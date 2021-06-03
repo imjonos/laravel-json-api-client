@@ -63,6 +63,36 @@ class Resources implements ResourcesInterface, IteratorAggregate
         }
         return $this->resources;
     }
+    
+    /**
+     * Chunking Results From Api
+     *
+     * @param int $size
+     * @param callable $callback
+     */
+    public function chunk(int $size = 700, callable $callback):void
+    {
+        $pageNumber = 1;
+        $lastPage = 1;
+        $total = 0;
+        do {
+            $resources = $this->get([
+                'page' => [
+                    'size' => $size,
+                    'number' => $pageNumber
+                ]
+            ]);
+
+            if ($total === 0) {
+                $lastPage = (int)$resources->meta['last_page'];
+                $total = (int)$resources->meta['total'];
+            }
+
+            $callback($resources, $pageNumber, $total);
+
+            $pageNumber++;
+        } while ($pageNumber < $lastPage);
+    }
 
     /**
      * Get included
