@@ -1,4 +1,6 @@
 <?php
+
+
 namespace Nos\JsonApiClient;
 use Nos\JsonApiClient\Interfaces\Resource as ResourceInterface;
 
@@ -28,7 +30,7 @@ class Resource implements ResourceInterface
      */
     public function __construct(Client $client, string $resourceUrl, array $resource = [])
     {
-        $this->resource = $resource;
+        $this->resource = $resource['data'];
         $this->resourceUrl = $resourceUrl;
         $this->client = $client;
     }
@@ -50,7 +52,6 @@ class Resource implements ResourceInterface
      */
     public function __get(string $property)
     {
-        $result = null;
         return array_key_exists($property, $this->resource)
             ? $this->resource[$property]
             : null;
@@ -133,6 +134,6 @@ class Resource implements ResourceInterface
      */
     public function getUrl(): string
     {
-        return $this->resourceUrl.'/'.$this->resource['data']['id'];
+        return $this->resourceUrl.'/'.$this->resource['id'];
     }
 }
