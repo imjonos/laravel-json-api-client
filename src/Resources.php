@@ -60,7 +60,7 @@ class Resources implements ResourcesInterface, IteratorAggregate
         if(isset($resources['included'])) $this->included = $resources['included'];
 
         foreach ($resources['data'] AS $resource){
-            $this->data[] = new Resource($this->getClient(), $this->getUrl(), $resource);
+            $this->data[] = new Resource($this->getClient(), $this->getUrl(), ['data' => $resource]);
         }
         return $this->data;
     }
