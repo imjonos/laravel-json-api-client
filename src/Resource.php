@@ -1,6 +1,4 @@
 <?php
-
-
 namespace Nos\JsonApiClient;
 use Nos\JsonApiClient\Interfaces\Resource as ResourceInterface;
 
@@ -42,7 +40,7 @@ class Resource implements ResourceInterface
      */
     public function __set(string $property, $value)
     {
-        return $this->resource['data'][$property] = $value;
+        return $this->resource[$property] = $value;
     }
 
 
@@ -52,8 +50,9 @@ class Resource implements ResourceInterface
      */
     public function __get(string $property)
     {
-        return array_key_exists($property, $this->resource['data'])
-            ? $this->resource['data'][$property]
+        $result = null;
+        return array_key_exists($property, $this->resource)
+            ? $this->resource[$property]
             : null;
     }
 
@@ -66,8 +65,10 @@ class Resource implements ResourceInterface
     protected function getRelationshipIds(string $type = ''): array
     {
         $ids = [];
-        foreach ($this->resource['relationships'][$type] as $value) {
-            $ids[] = (int)$value['id'];
+        if(isset($this->resource['relationships'])) {
+            foreach ($this->resource['relationships'][$type] as $value) {
+                $ids[] = (int)$value['id'];
+            }
         }
         return $ids;
     }
@@ -78,9 +79,9 @@ class Resource implements ResourceInterface
      * @return array
      * @throws \GuzzleHttp\Exception\GuzzleException
      */
-    public function get(): array
+    public function get(array $query = []): array
     {
-        return $this->getClient()->get($this->getUrl());
+        return $this->getClient()->get($this->getUrl(), $query);
     }
 
     /**
@@ -91,7 +92,7 @@ class Resource implements ResourceInterface
      */
     public function patch(): array
     {
-        return $this->getClient()->patch($this->getUrl(), $this->resource);
+        return $this->getClient()->patch($this->getUrl(), ['data' => $this->resource]);
     }
 
     /**
@@ -102,7 +103,7 @@ class Resource implements ResourceInterface
      */
     public function post(): array
     {
-        return $this->getClient()->post($this->getUrl(), $this->resource);
+        return $this->getClient()->post($this->getUrl(), ['data' => $this->resource]);
     }
 
     /**
