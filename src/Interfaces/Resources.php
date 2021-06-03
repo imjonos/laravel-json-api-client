@@ -7,9 +7,10 @@ Interface Resources
     /**
      * Get resources
      *
+     * @param array $query
      * @return array
      */
-    public function get():array;
+    public function get(array $query = []): array;
 
     /**
      * Get HTTP client
