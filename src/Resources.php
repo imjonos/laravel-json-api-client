@@ -55,6 +55,7 @@ class Resources implements ResourcesInterface, IteratorAggregate
      */
     public function get(array $query = []): array
     {
+        $this->data = [];
         $resources = $this->getClient()->get($this->getUrl(), $query);
         if(isset($resources['meta'])) $this->meta = $resources['meta'];
         if(isset($resources['included'])) $this->included = $resources['included'];
