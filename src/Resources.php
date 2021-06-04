@@ -96,19 +96,30 @@ class Resources implements ResourcesInterface, IteratorAggregate
         } while ($pageNumber < $lastPage);
     }
 
-    /**
+     /**
      * Get included
      *
      * @param string $type
      * @param array $ids
      * @return array
      */
-    public function getIncluded(string $type, array $ids = []): array
+    public function getIncluded(string $type = '', array $ids = []): array
     {
         $result = [];
-        foreach ($this->included as $include) {
-            if (in_array((int)$include['id'], $ids) && $include['type'] === $type) {
-                $result[] = $include;
+
+        if(!count($ids) && !$type){
+            $result = $this->included;
+        }else {
+            foreach ($this->included as $include) {
+                if (count($ids) && $type) {
+                    if (in_array((int)$include['id'], $ids) && $include['type'] === $type) {
+                        $result[] = $include;
+                    }
+                } else if (!count($ids) && $type) {
+                    if ($include['type'] === $type) {
+                        $result[] = $include;
+                    }
+                }
             }
         }
         return $result;
