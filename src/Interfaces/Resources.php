@@ -11,6 +11,14 @@ Interface Resources
      * @return array
      */
     public function get(array $query = []): array;
+    
+    /**
+     * Chunking Results From Api
+     *
+     * @param int $size
+     * @param callable $callback
+     */
+    public function chunk(int $size = 700, callable $callback): void;
 
     /**
      * Get HTTP client
