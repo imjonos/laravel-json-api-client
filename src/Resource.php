@@ -134,6 +134,8 @@ class Resource implements ResourceInterface
      */
     public function getUrl(): string
     {
-        return $this->resourceUrl.'/'.$this->resource['id'];
+        $result = $this->resourceUrl;
+        if(isset($this->resource['id'])) $result.= '/'.$this->resource['id'];
+        return $result;
     }
 }
