@@ -33,9 +33,9 @@ Interface Client
      *
      * @param string $uri
      * @param array $data
-     * @return array
+     * @return ?array
      */
-    public function post(string $uri, array $data = []):array;
+    public function post(string $uri, array $data = []):?array;
 
     /**
      * DELETE Resource
