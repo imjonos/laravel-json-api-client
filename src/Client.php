@@ -105,10 +105,10 @@ class Client implements ClientInterface
      *
      * @param string $uri
      * @param array $data
-     * @return array
+     * @return ?array
      * @throws GuzzleException
      */
-    public function post(string $uri, array $data = []): array
+    public function post(string $uri, array $data = []): ?array
     {
         $response = $this->sendApiRequest('POST', $this->apiUrl . $uri, ['form_params' => $data]);
         return json_decode((string)$response->getBody(), true);
