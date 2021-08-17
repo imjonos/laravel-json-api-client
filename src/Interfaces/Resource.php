@@ -21,9 +21,9 @@ Interface Resource
     /**
      * POST Resource
      *
-     * @return void
+     * @return array
      */
-    public function post():void;
+    public function post():array;
 
     /**
      * DELETE Resource
