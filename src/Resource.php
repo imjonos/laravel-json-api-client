@@ -99,12 +99,12 @@ class Resource implements ResourceInterface
     /**
      * Post resource
      *
-     * @return void
+     * @return array
      * @throws \GuzzleHttp\Exception\GuzzleException
      */
-    public function post(): void
+    public function post(): array
     {
-        $this->getClient()->post($this->resourceUrl, ['data' => $this->resource]);
+        return $this->getClient()->post($this->resourceUrl, ['data' => $this->resource]);
     }
 
     /**
