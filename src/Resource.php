@@ -104,7 +104,7 @@ class Resource implements ResourceInterface
      */
     public function post(): void
     {
-        $this->getClient()->post($this->getUrl(), ['data' => $this->resource]);
+        $this->getClient()->post($this->resourceUrl, ['data' => $this->resource]);
     }
 
     /**
