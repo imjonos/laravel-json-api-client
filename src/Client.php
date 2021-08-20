@@ -111,7 +111,8 @@ class Client implements ClientInterface
     public function post(string $uri, array $data = []): ?array
     {
         $response = $this->sendApiRequest('POST', $this->apiUrl . $uri, ['form_params' => $data]);
-        return $response?json_decode((string)$response->getBody(), true):[];
+        $result =  json_decode((string)$response->getBody(), true);
+        return ($result)?$result:[];
     }
 
     /**
