@@ -148,7 +148,7 @@ class Client implements ClientInterface
         return [
             'code' => $response->getStatusCode(),
             'body' => json_decode((string)$response->getBody()),
-            'headers' => json_decode((string)$response->getHeaders())
+            'headers' => $response->getHeaders()
         ];
     }
 
