@@ -23,6 +23,18 @@ $resources->chunk(100, function($resources, $pageNumber, $total){
   }
 });
 ```
+```
+$companyResource = new Resource($client, '/api/v1/companies/', 
+                [ 
+                  'data' => [
+                    'id' => '1',
+                    'type' => 'companies'
+                  ]
+]);
+$companyResource->get();
+```
+
+
 
 ## Change log
 
