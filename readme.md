@@ -32,6 +32,13 @@ $companyResource = new Resource($client, '/api/v1/companies/',
                   ]
 ]);
 $companyResource->get();
+
+[
+  'code' => 200,
+  'body' => []
+  'headers' => []
+]
+
 ```
 
 
