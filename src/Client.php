@@ -144,12 +144,23 @@ class Client implements ClientInterface
                 'Authorization' => 'Bearer ' . $token['access_token']
             ]
         ]);
-        $response = $this->getHttpClient()->request($method, $url, $requestParams);
-        return [
-            'code' => $response->getStatusCode(),
-            'body' => json_decode((string)$response->getBody()),
-            'headers' => $response->getHeaders()
-        ];
+        
+        $result = [];
+        try {
+            $response = $this->getHttpClient()->request($method, $url, $requestParams);
+            $result = [
+                'code' => $response->getStatusCode(),
+                'body' => json_decode((string)$response->getBody()),
+                'headers' => $response->getHeaders()
+            ];
+        }catch (\Exception $e){
+            $result = [
+                'code' => $e->getCode(),
+                'body' => $e->getMessage(),
+                'headers' => []
+            ];
+        }
+        return $result;
     }
 
     /**
