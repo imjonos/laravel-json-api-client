@@ -1,8 +1,5 @@
 <?php
-
-
 namespace Nos\JsonApiClient;
-
 
 use GuzzleHttp\Client as GuzzleHttpClient;
 use GuzzleHttp\Exception\GuzzleException;
@@ -82,8 +79,7 @@ class Client implements ClientInterface
      */
     public function get(string $uri, array $query = []): array
     {
-        $response = $this->sendApiRequest('GET', $this->apiUrl . $uri, ['query' => $query]);
-        return json_decode((string)$response->getBody(), true);
+        return $this->sendApiRequest('GET', $this->apiUrl . $uri, ['query' => $query]);
     }
 
     /**
@@ -96,8 +92,7 @@ class Client implements ClientInterface
      */
     public function patch(string $uri, array $data = []): array
     {
-        $response = $this->sendApiRequest('PATCH', $this->apiUrl . $uri, ['form_params' => $data]);
-        return json_decode((string)$response->getBody(), true);
+        return $this->sendApiRequest('PATCH', $this->apiUrl . $uri, ['form_params' => $data]);
     }
 
     /**
@@ -110,9 +105,7 @@ class Client implements ClientInterface
      */
     public function post(string $uri, array $data = []): ?array
     {
-        $response = $this->sendApiRequest('POST', $this->apiUrl . $uri, ['form_params' => $data]);
-        $result =  json_decode((string)$response->getBody(), true);
-        return ($result)?$result:[];
+        return $this->sendApiRequest('POST', $this->apiUrl . $uri, ['form_params' => $data]);
     }
 
     /**
@@ -124,8 +117,7 @@ class Client implements ClientInterface
      */
     public function delete(string $uri): array
     {
-        $response = $this->sendApiRequest('DELETE', $this->apiUrl . $uri);
-        return json_decode((string)$response->getBody(), true);
+        return $this->sendApiRequest('DELETE', $this->apiUrl . $uri);
     }
 
     /**
@@ -134,11 +126,11 @@ class Client implements ClientInterface
      * @param string $method
      * @param string $url
      * @param array $params
-     * @return ResponseInterface
+     * @return array
      * @throws GuzzleException
      * @throws \Exception
      */
-    protected function sendApiRequest(string $method = 'GET', string $url = '', array $params = []): ResponseInterface
+    protected function sendApiRequest(string $method = 'GET', string $url = '', array $params = []): array
     {
         $token = $this->getToken();
 
@@ -152,7 +144,12 @@ class Client implements ClientInterface
                 'Authorization' => 'Bearer ' . $token['access_token']
             ]
         ]);
-        return $this->getHttpClient()->request($method, $url, $requestParams);
+        $response = $this->getHttpClient()->request($method, $url, $requestParams);
+        return [
+            'code' => $response->getStatusCode(),
+            'body' => json_decode((string)$response->getBody()),
+            'headers' => json_decode((string)$response->getHeaders())
+        ];
     }
 
     /**
