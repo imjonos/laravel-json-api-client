@@ -98,7 +98,7 @@ class Resources implements ResourcesInterface, IteratorAggregate
         } while ($pageNumber < $lastPage);
     }
 
-     /**
+    /**
      * Get included
      *
      * @param string $type
@@ -114,11 +114,11 @@ class Resources implements ResourcesInterface, IteratorAggregate
         }else {
             foreach ($this->included as $include) {
                 if (count($ids) && $type) {
-                    if (in_array((int)$include['id'], $ids) && $include['type'] === $type) {
+                    if (in_array((int)$include->id, $ids) && $include->type === $type) {
                         $result[] = $include;
                     }
                 } else if (!count($ids) && $type) {
-                    if ($include['type'] === $type) {
+                    if ($include->type === $type) {
                         $result[] = $include;
                     }
                 }
