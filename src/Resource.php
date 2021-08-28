@@ -57,7 +57,7 @@ class Resource implements ResourceInterface
             : null;
     }
 
-    /**
+     /**
      * Get ids from Many Relationship
      *
      * @param string $type
@@ -66,9 +66,9 @@ class Resource implements ResourceInterface
     public function getRelationshipIds(string $type = ''): array
     {
         $ids = [];
-        if(isset($this->resource['relationships']) && isset($this->resource['relationships'][$type])) {
-            foreach ($this->resource['relationships'][$type]['data'] as $value) {
-                $ids[] = (int)$value['id'];
+        if(isset($this->resource['relationships']) && isset($this->resource['relationships']->{$type})) {
+            foreach ($this->resource['relationships']->{$type}->data as $value) {
+                $ids[] = (int)$value->id;
             }
         }
         return $ids;
